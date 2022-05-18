@@ -1,0 +1,21 @@
+main: red.kalos.costcommand.Main
+name: KalosCostCommand
+
+version: ${project.version}
+description: ${project.description}
+website: ${project.url}
+
+authors:
+  - KalosStudios
+
+api-version: 1.12
+
+depend:
+  - Vault
+
+commands:
+  KalosCostCommand:
+    aliases:
+      - kalosrate
+      - kr
+    description: "主指令。"

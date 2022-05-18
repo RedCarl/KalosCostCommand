@@ -1,0 +1,15 @@
+##转账手续费
+Cost: 0.1
+##扣款指令，可兼容其他插件    %player%(玩家ID) %cost%(Cost*转账金额=应缴费用)
+command: "hamsterecohelper balance take %player% %cost%"
+
+##扣费指令
+costcommand:
+  ##指令
+  tab:
+    ##冷却 秒
+    coolDown: 30
+    ##使用次数 -1 = 无限次
+    number: 5
+    ##使用费用 0 = 免费
+    cost: 1
