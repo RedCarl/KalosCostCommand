@@ -16,16 +16,22 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void PlayerCommandPreprocessEvent(PlayerCommandPreprocessEvent event){
         Player player = event.getPlayer();
-        System.out.println(event.getMessage());
+        String command = event.getMessage().toLowerCase();
+        if (command.contains(" ")){
+            command = command.substring(0, event.getMessage().toLowerCase().indexOf(" "));
+        }
         for (CostCommand costCommand: CostCommandManager.getCostCommandList()) {
-            if (event.getMessage().contains(costCommand.getCommand())){
+
+            if (command.equals("/"+costCommand.getCommand().toLowerCase())){
                 if (Main.getEconomy().getBalance(player)>=costCommand.getCost()){
                     if (CostCommandManager.setPlayerData(event.getPlayer(), costCommand)){
                         Main.getEconomy().withdrawPlayer(player,costCommand.getCost());
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(),Main.getInstance().getConfig().getString("command")
-                                .replace("%player%",player.getName())
-                                .replace("%cost%",String.valueOf(costCommand.getCost()))
-                        );
+                        if (!(costCommand.getCost()<=0)){
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(),Main.getInstance().getConfig().getString("command")
+                                    .replace("%player%",player.getName())
+                                    .replace("%cost%",String.valueOf(costCommand.getCost()))
+                            );
+                        }
                     }else {
                         player.sendMessage(ColorParser.parse("&8[&c&l!&8] &7很抱歉，您使用该指令的次数上限了。"));
                         player.playSound(player.getLocation(), Sound.ENTITY_VILLAGER_NO,1,1);
@@ -39,5 +45,9 @@ public class PlayerListener implements Listener {
 
             }
         }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("2313 223".substring(0, "2313 223".indexOf(" ")));
     }
 }
